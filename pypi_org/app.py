@@ -18,5 +18,11 @@ def index():
     return flask.render_template('index.html', packages=test_packages)
 
 
+@app.route('/about')
+def about():
+    """About page."""
+    return flask.render_template('about.html')
+
+
 if __name__ == '__main__':
     app.run()
