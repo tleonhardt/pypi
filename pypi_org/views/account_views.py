@@ -22,7 +22,8 @@ def index():
         return flask.redirect('/account/login')
 
     return {
-        'user': user
+        'user': user,
+        'user_id': user.id
     }
 
 
@@ -31,7 +32,9 @@ def index():
 @blueprint.route('/account/register', methods=['GET'])
 @response(template_file='account/register.html')
 def register_get():
-    return {}
+    return {
+        'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
+    }
 
 
 @blueprint.route('/account/register', methods=['POST'])
@@ -48,7 +51,8 @@ def register_post():
             'name': name,
             'email': email,
             'password': password,
-            'error': "Some required fields are missing."
+            'error': "Some required fields are missing.",
+            'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
         }
 
     # Create the user (in the DB)
@@ -58,7 +62,8 @@ def register_post():
             'name': name,
             'email': email,
             'password': password,
-            'error': "A user with that email already exists."
+            'error': "A user with that email already exists.",
+            'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
         }
 
     # Log in browser as a session
@@ -73,7 +78,9 @@ def register_post():
 @blueprint.route('/account/login', methods=['GET'])
 @response(template_file='account/login.html')
 def login_get():
-    return {}
+    return {
+        'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
+    }
 
 
 @blueprint.route('/account/login', methods=['POST'])
@@ -88,7 +95,8 @@ def login_post():
         return {
             'email': email,
             'password': password,
-            'error': "Some required fields are missing."
+            'error': "Some required fields are missing.",
+            'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
         }
 
     # Validate the user
@@ -97,7 +105,8 @@ def login_post():
         return {
             'email': email,
             'password': password,
-            'error': "The account does not exist or the password is wrong."
+            'error': "The account does not exist or the password is wrong.",
+            'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
         }
 
     # Log in browser as a session
