@@ -3,6 +3,8 @@ body {
     background: #fff;
     margin: 0px;
     padding: 0px;
+    font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    font-size: 17px;
 }
 .title {
     font-weight: bold;
@@ -44,7 +46,7 @@ nav > a {
     text-decoration: underline;
 }
 
-.hero-innner {
+.hero-inner {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
@@ -53,4 +55,20 @@ nav > a {
 
 .hero-inner h1 {
     margin-bottom: 30px;
+}
+
+.pypi-stats {
+    padding: 10px 0;
+    background-color: : #ececec;
+    text-align: center;
+    border-bottom: 1px solid #d3d3d3;
+    border-top: 1px solid #d3d3d3;
+}
+
+.pypi-stats .stat {
+    display: inline-block;
+    min-width: 17px;
+    padding: 10px;
+    font-size: 16px;
+    color: #003d61;
 }
