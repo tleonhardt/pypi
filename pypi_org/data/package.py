@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 
-from data.modelbase import SqlAlchemyBase
+from pypi_org.data.modelbase import SqlAlchemyBase
 
 
 class Package(SqlAlchemyBase):

@@ -8,15 +8,19 @@ import pypi_org.data.db_session as db_session
 app = flask.Flask(__name__)
 
 
-def main():
+def initialize_stuff():
     register_blueprints()
     setup_db()
+
+
+def main():
+    initialize_stuff()
     app.run(debug=True)
 
 
 def setup_db():
     db_file = os.path.join(os.path.dirname(__file__), 'db', 'pypi.sqlite')
-    db_session.global_int(db_file)
+    db_session.global_init(db_file)
 
 
 def register_blueprints():
@@ -30,6 +34,8 @@ def register_blueprints():
 
 
 if __name__ == '__main__':
+    # Run from Python
     main()
-else:
-    register_blueprints()
+elif __name__ == 'app':
+    # Run from the flask command line executable
+    initialize_stuff()
