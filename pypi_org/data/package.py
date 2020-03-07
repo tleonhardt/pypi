@@ -1,7 +1,9 @@
 import sqlalchemy as sa
 
+from data.modelbase import SqlAlchemyBase
 
-class Package:
+
+class Package(SqlAlchemyBase):
     """SQLAlchemy model for packages."""
     __tablename__ = 'packages'
 
