@@ -13,17 +13,19 @@ body {
     padding: 0px 0px 50px;
 }
 
+
 .hero {
     background-color: #0073b7;
     color: white;
-    font-size: 14px;
+    font-size: 18px;
 
     padding: 50px 0px;
     text-align: center;
 }
 
 .hero h1 {
-    font-size: 24px;
+    font-size: 30px;
+    margin-bottom: 30px;
 }
 
 .hero a {
@@ -32,14 +34,17 @@ body {
 }
 
 .hero-inner {
-    max-width: 500px;
+    max-width: 550px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 30px;
 }
 
-.hero-inner h1 {
-    margin-bottom: 30px;
+.form-control {
+    display: inline-block;
+    border-radius: 2px;
+    font-size: 20px;
+    padding: 20px;
 }
 
 .pypi-stats {
@@ -53,7 +58,7 @@ body {
 
 .pypi-stats .stat {
     display: inline-block;
-    min-width: 17px;
+    min-width: 170px;
     padding: 10px;
     font-size: 16px;
     color: #003d61;
@@ -92,6 +97,7 @@ body {
     font-style: italic;
 }
 
+
 footer {
     margin-top: 50px;
     padding: 30px;
@@ -101,4 +107,12 @@ footer {
 
 footer a {
     color: #2495f2;
+}
+
+.error-msg {
+    color: #b30000;
+}
+
+.page-core {
+    padding: 20px;
 }
