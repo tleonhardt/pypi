@@ -4,6 +4,3 @@ This is code from following along with the
 course from [Talk Python Training](https://training.talkpython.fm).
 
 Here is the [parent GitHub repo](https://github.com/talkpython/data-driven-web-apps-with-flask) for the course.
-
-I just started though, so I am not very far along.
-
