@@ -5,6 +5,7 @@ import pypi_org.services.user_service as user_service
 from pypi_org.infrastructure import request_dict
 from pypi_org.infrastructure.view_modifiers import response
 from pypi_org.viewmodels.account.index_viewmodel import IndexViewModel
+from pypi_org.viewmodels.account.login_viewmodel import LoginViewModel
 from pypi_org.viewmodels.account.register_viewmodel import RegisterViewModel
 
 blueprint = flask.Blueprint('account', __name__, template_folder='templates')
@@ -17,7 +18,6 @@ blueprint = flask.Blueprint('account', __name__, template_folder='templates')
 @response(template_file='account/index.html')
 def index():
     vm = IndexViewModel()
-
     if not vm.user:
         return flask.redirect('/account/login')
 
@@ -38,7 +38,6 @@ def register_get():
 def register_post():
     vm = RegisterViewModel()
     vm.validate()
-
     if vm.error:
         return vm.to_dict()
 
@@ -60,38 +59,23 @@ def register_post():
 @blueprint.route('/account/login', methods=['GET'])
 @response(template_file='account/login.html')
 def login_get():
-    return {
-        'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
-    }
+    vm = LoginViewModel()
+    return vm.to_dict()
 
 
 @blueprint.route('/account/login', methods=['POST'])
 @response(template_file='account/login.html')
 def login_post():
-    data = request_dict.create(default_val='')
+    vm = LoginViewModel()
+    vm.validate()
+    if vm.error:
+        return vm.to_dict()
 
-    email = data.email.lower().strip()
-    password = data.password.strip()
-
-    if not email or not password:
-        return {
-            'email': email,
-            'password': password,
-            'error': "Some required fields are missing.",
-            'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
-        }
-
-    # Validate the user
-    user = user_service.login_user(email, password)
+    user = user_service.login_user(vm.email, vm.password)
     if not user:
-        return {
-            'email': email,
-            'password': password,
-            'error': "The account does not exist or the password is wrong.",
-            'user_id': cookie_auth.get_user_id_via_auth_cookie(flask.request),
-        }
+        vm.error = "The account does not exist or the password is wrong."
+        return vm.to_dict()
 
-    # Log in browser as a session
     resp = flask.redirect('/account')
     cookie_auth.set_auth(resp, user.id)
 
