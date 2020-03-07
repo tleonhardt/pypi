@@ -7,26 +7,9 @@ body {
     font-size: 17px;
 }
 
-.title {
-    font-weight: bold;
-}
-
 .main_content {
     padding: 0px;
     margin: 0px;
-}
-
-nav {
-    background-color: #0073b7;
-    padding: 10px;
-    font-size: 20px;
-    color: white;
-    height: 65px;
-}
-
-nav > a {
-    color: white;
-    margin-right: 10px;
 }
 
 .hero {
