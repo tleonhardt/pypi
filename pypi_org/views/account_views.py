@@ -25,7 +25,24 @@ def register_get():
 @blueprint.route('/account/register', methods=['POST'])
 @response(template_file='account/register.html')
 def register_post():
-    return {}
+    r = flask.request
+
+    name = r.form.get('name')
+    email = r.form.get('email', '').lower().strip()
+    password = r.form.get('password', '').strip()
+
+    if not name or not email or not password:
+        return {
+            'error': "Some required fields are missing.",
+            'name': name,
+            'email': email,
+            'password': password
+        }
+
+    # TODO: Create the user (in the DB)
+    # TODO: Log in browser as a session
+    
+    return flask.redirect('/account')
 
 
 # ################### LOGIN #################################
