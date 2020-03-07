@@ -2,6 +2,7 @@ import flask
 
 import pypi_org.services.user_service as user_service
 from pypi_org.infrastructure.view_modifiers import response
+import pypi_org.infrastructure.cookie_auth as cookie_auth
 
 blueprint = flask.Blueprint('account', __name__, template_folder='templates')
 
@@ -12,7 +13,17 @@ blueprint = flask.Blueprint('account', __name__, template_folder='templates')
 @blueprint.route('/account')
 @response(template_file='account/index.html')
 def index():
-    return {}
+    user_id = cookie_auth.get_user_id_via_auth_cookie(flask.request)
+    if user_id is None:
+        return flask.redirect('/account/login')
+
+    user = user_service.find_user_by_id(user_id)
+    if not user:
+        return flask.redirect('/account/login')
+
+    return {
+        'user': user
+    }
 
 
 # ################### REGISTER #################################
@@ -50,9 +61,11 @@ def register_post():
             'error': "A user with that email already exists."
         }
 
-    # TODO: Log in browser as a session
+    # Log in browser as a session
+    resp = flask.redirect('/account')
+    cookie_auth.set_auth(resp, user.id)
 
-    return flask.redirect('/account')
+    return resp
 
 
 # ################### LOGIN #################################
@@ -78,7 +91,7 @@ def login_post():
             'error': "Some required fields are missing."
         }
 
-    # TODO: Validate the user
+    # Validate the user
     user = user_service.login_user(email, password)
     if not user:
         return {
@@ -87,13 +100,19 @@ def login_post():
             'error': "The account does not exist or the password is wrong."
         }
 
-    # TODO: Log in browser as a session
+    # Log in browser as a session
+    resp = flask.redirect('/account')
+    cookie_auth.set_auth(resp, user.id)
 
-    return flask.redirect('/account')
+    return resp
 
 
 # ################### LOGOUT #################################
 
 @blueprint.route('/account/logout')
 def logout():
-    return {}
+    resp = flask.redirect('/')
+    cookie_auth.logout(resp)
+
+    return resp
+
