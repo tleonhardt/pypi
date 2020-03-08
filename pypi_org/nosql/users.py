@@ -6,7 +6,7 @@ class User(mongoengine.Document):
     name = mongoengine.StringField()
     email = mongoengine.StringField(unique=True)
     hashed_password = mongoengine.StringField()
-    created_date = mongoengine.StringField(default=datetime.datetime.now)
+    created_date = mongoengine.DateTimeField(default=datetime.datetime.now)
 
     meta = {
         'collection': 'users',
@@ -14,6 +14,6 @@ class User(mongoengine.Document):
         'indexes': [
             'email',
             'hashed_password',
-            'created_date'
+            'created_date',
         ]
     }

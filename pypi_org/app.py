@@ -1,4 +1,4 @@
-"""First Flask site."""
+"""Flask site using MongoDB and MongoEngine"""
 import os
 import sys
 
