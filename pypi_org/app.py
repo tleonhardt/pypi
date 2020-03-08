@@ -4,9 +4,10 @@ import sys
 
 import flask
 
+from pypi_org.nosql import mongo_setup
+
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, folder)
-import pypi_org.data.db_session as db_session
 
 app = flask.Flask(__name__)
 
@@ -28,8 +29,7 @@ def configure():
 
 
 def setup_db():
-    db_file = os.path.join(os.path.dirname(__file__), 'db', 'pypi.sqlite')
-    db_session.global_init(db_file)
+    mongo_setup.global_init()
 
 
 def register_blueprints():

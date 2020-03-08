@@ -12,6 +12,7 @@ webtest = "*"
 
 [packages]
 flask = "*"
+mongoengine = "*"
 passlib = "*"
 progressbar2 = "*"
 python-dateutil = "*"
