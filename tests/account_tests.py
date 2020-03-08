@@ -57,6 +57,25 @@ def test_vm_register_validation_for_existing_user():
     assert 'already exists' in vm.error
 
 
+def test_vm_register_validation_no_email():
+    # Arrange
+    form_data = {
+        'name': 'Michael',
+        'email': '',
+        'password': 'a' * 6
+    }
+
+    with flask_app.test_request_context(path='/account/register', data=form_data):
+        vm = RegisterViewModel()
+
+        # Act
+        vm.validate()
+
+    # Assert
+    assert vm.error is not None
+    assert 'email' in vm.error
+
+
 def test_v_register_view_new_user():
     # 3 A's of test: Arrange, Act, then Assert
 
