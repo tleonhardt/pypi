@@ -1,21 +1,30 @@
 """First Flask site."""
 import os
+import sys
 
 import flask
 
+folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, folder)
 import pypi_org.data.db_session as db_session
 
 app = flask.Flask(__name__)
 
 
-def initialize_stuff():
-    register_blueprints()
-    setup_db()
-
-
 def main():
-    initialize_stuff()
-    app.run(debug=True)
+    configure()
+    app.run(debug=True, port=5006)
+
+
+def configure():
+    print("Configuring Flask app:")
+
+    register_blueprints()
+    print("Registered blueprints")
+
+    setup_db()
+    print("DB setup completed.")
+    print("", flush=True)
 
 
 def setup_db():
@@ -38,8 +47,8 @@ def register_blueprints():
 
 
 if __name__ == '__main__':
-    # Run from Python
+    # Run from Python - start the dev server
     main()
 elif __name__ == 'app':
-    # Run from the flask command line executable
-    initialize_stuff()
+    # Run from the flask command line executable, just configure the app
+    configure()
