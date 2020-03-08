@@ -53,7 +53,7 @@ cd /apps
 git clone https://github.com/tleonhardt/pypi.git app_repo
 
 # Setup the web app:
-cd cd /apps/app_repo
+cd /apps/app_repo
 pip install -r requirements.txt
 
 # Copy and enable the daemon
