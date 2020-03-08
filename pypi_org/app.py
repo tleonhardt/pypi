@@ -49,6 +49,6 @@ def register_blueprints():
 if __name__ == '__main__':
     # Run from Python - start the dev server
     main()
-elif __name__ == 'app':
-    # Run from the flask command line executable, just configure the app
+else:
+    # Run from the flask command line executable, uwsgi, etc.
     configure()
